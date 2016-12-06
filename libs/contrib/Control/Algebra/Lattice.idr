@@ -16,13 +16,13 @@ import Data.Heap
 |||     forall a,     join a a          == a
 |||
 ||| Join semilattices capture the notion of sets with a "least upper bound".
-interface JoinSemilattice a where
+interface JoinSemiLattice a where
   join : a -> a -> a
 
-implementation JoinSemilattice Nat where
+implementation JoinSemiLattice Nat where
   join = maximum
 
-implementation Ord a => JoinSemilattice (MaxiphobicHeap a) where
+implementation Ord a => JoinSemiLattice (MaxiphobicHeap a) where
   join = merge
 
 ||| Sets equipped with a binary operation that is commutative, associative and
@@ -36,10 +36,10 @@ implementation Ord a => JoinSemilattice (MaxiphobicHeap a) where
 |||     forall a,     meet a a          == a
 |||
 ||| Meet semilattices capture the notion of sets with a "greatest lower bound".
-interface MeetSemilattice a where
+interface MeetSemiLattice a where
   meet : a -> a -> a
 
-implementation MeetSemilattice Nat where
+implementation MeetSemiLattice Nat where
   meet = minimum
 
 ||| Sets equipped with a binary operation that is commutative, associative and
@@ -57,10 +57,10 @@ implementation MeetSemilattice Nat where
 |||
 |||  Join semilattices capture the notion of sets with a "least upper bound"
 |||  equipped with a "bottom" element.
-interface JoinSemilattice a => BoundedJoinSemilattice a where
+interface JoinSemiLattice a => BoundedJoinSemiLattice a where
   bottom  : a
 
-implementation BoundedJoinSemilattice Nat where
+implementation BoundedJoinSemiLattice Nat where
   bottom = Z
 
 ||| Sets equipped with a binary operation that is commutative, associative and
@@ -78,7 +78,7 @@ implementation BoundedJoinSemilattice Nat where
 |||
 ||| Meet semilattices capture the notion of sets with a "greatest lower bound"
 ||| equipped with a "top" element.
-interface MeetSemilattice a => BoundedMeetSemilattice a where
+interface MeetSemiLattice a => BoundedMeetSemiLattice a where
   top : a
 
 ||| Sets equipped with two binary operations that are both commutative,
@@ -97,7 +97,7 @@ interface MeetSemilattice a => BoundedMeetSemilattice a where
 ||| + Absorbtion laws for meet and join:
 |||     forall a b,   meet a (join a b) == a
 |||     forall a b,   join a (meet a b) == a
-interface (JoinSemilattice a, MeetSemilattice a) => Lattice a where { }
+interface (JoinSemiLattice a, MeetSemiLattice a) => Lattice a where { }
 
 implementation Lattice Nat where { }
 
@@ -121,4 +121,4 @@ implementation Lattice Nat where { }
 ||| + Neutral for meet and join:
 |||     forall a,     meet a top        == top
 |||     forall a,     join a bottom     == bottom
-interface (BoundedJoinSemilattice a, BoundedMeetSemilattice a) => BoundedLattice a where { }
+interface (BoundedJoinSemiLattice a, BoundedMeetSemiLattice a) => BoundedLattice a where { }
